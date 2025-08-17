@@ -12,7 +12,8 @@ const PORT = 5000;
 // ✅ Middleware
 const cors = require('cors');
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: ['http://localhost:3000', 'https://your-domain.com'],
+  credentials: true
 }));
 app.use(express.json());
 app.use('/uploads', express.static('uploads')); // لعرض الصور
@@ -592,4 +593,13 @@ app.post('/api/contact', async (req, res) => {
 /* ------------------- 🚀 Start Server ------------------- */
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
+});
+
+// معالجة الأخطاء
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
 });
